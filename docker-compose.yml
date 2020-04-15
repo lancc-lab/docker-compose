@@ -1,0 +1,16 @@
+version: '2'
+services:
+  war:
+    build: war
+    ports:
+      - "8081:8080"
+    volumes:
+      - data_volume:/usr/local/tomcat/webapps
+  prod:
+    build: prod
+    ports:
+      - "8080:8080"
+    volumes:
+      - data_volume:/usr/local/tomcat/webapps
+volumes:
+  data_volume:
