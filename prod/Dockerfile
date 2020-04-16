@@ -1,6 +1,5 @@
 FROM alpine
 
-RUN apk add openjdk8
 ENV TOMCAT_MAJOR=8 \
     TOMCAT_VERSION=8.5.3 \
     TOMCAT_HOME=/opt/tomcat \
@@ -8,6 +7,7 @@ ENV TOMCAT_MAJOR=8 \
     CATALINA_OUT=/dev/null
 
 RUN apk upgrade --update && \
+    apk add --update openjdk8 && \
     apk add --update curl && \
     curl -jksSL -o /tmp/apache-tomcat.tar.gz http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
     gunzip /tmp/apache-tomcat.tar.gz && \
@@ -17,8 +17,6 @@ RUN apk upgrade --update && \
     apk del curl && \
     rm -rf /tmp/* /var/cache/apk/*
 
-
 EXPOSE 8080
-
 
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
